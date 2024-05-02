@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<form action="{% url 'accounts:signup' %}" method="POST">
+    {% csrf_token %}
+    <p>username</p>
+    <input type="text" name="username">
+    <br>
+
+    <p>password</p>
+    <input type="password" name="password">
+    <br>
+
+    <p>confirm</p>
+    <input type="password" name="confirm">
+    <br>
+
+    <p>별명</p>
+    <input type="text" name="nickname">
+    <br>
+
+
+    <p>생년원일</p>
+    <input type="text" name="birth">
+    <br>
+
+    <p>학년</p>
+    <input type="radio"  id="1" name="grade" value="1">
+    <label for="1">1</label>
+    <input type="radio"  id="2" name="grade" value="2">
+    <label for="2">2</label>
+    <input type="radio"  id="3" name="grade" value="3">
+    <label for="3">3</label>
+    <input type="radio"  id="4" name="grade" value="4">
+    <label for="4">4</label>
+    <br>
+    
+    <input type="submit" value="회원가입">
+</form>
+
+{% endblock %}
