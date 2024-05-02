@@ -12,7 +12,7 @@
 <h2>My Posts:</h2>
 <ul>
     {% for post in user_posts %}
-        <li>{{ post.title }}</li>
+    <li><a href="{% url 'main:detail' post.pk %}">{{ post.title }}</a></li>
     {% empty %}
         <li>작성한 글이 없습니다.</li>
     {% endfor %}
