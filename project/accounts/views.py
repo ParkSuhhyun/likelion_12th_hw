@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib import auth
 from django.contrib.auth.models import User
 from .models import Profile
-from main.models import Post
+
 
 # Create your views here.
 def login(request):
@@ -44,6 +44,3 @@ def signup(request):
             return redirect('/')
     return render(request, 'accounts/signup.html')
 
-def mypage(request):
-    user_posts = Post.objects.filter(writer=request.user) 
-    return render(request, 'accounts/mypage.html', {'user_posts': user_posts})

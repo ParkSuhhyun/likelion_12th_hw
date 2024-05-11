@@ -4,7 +4,7 @@
 <form action="{% url 'main:create' %}" method="POST" enctype="multipart/form-data">
     {% csrf_token %}
     <p>제목 : <input type="text" name="title"></p>
-    <p>작성자 : <input type="text" name="writer"></p>
+    <!-- <p>작성자 : <input type="text" name="writer"></p> -->
     <p>성별 :</p>
     <input type="radio" id="male" name="sex" value="남성">
     <label for="male">남성</label><br>
