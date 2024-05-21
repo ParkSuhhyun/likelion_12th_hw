@@ -31,15 +31,20 @@ def detail(request, id):  # detail 함수의 매개변수 이름을 id로 수정
 
         new_comment.save()
 
-        return redirect('main:detail', id)
-    
-def delete_comment(request, id):
-    comment = get_object_or_404(Comment, pk=id)
-    post_id = comment.post.id
-    if request.user.is_authenticated and request.user == comment.writer:
-        comment.delete()
-    return redirect('main:detail', id=post_id)
+        words=new_comment.content.split(' ')
+        tag_list = []
 
+        for w in words:
+            if len(w)>0:
+                if w[0] == '#':
+                    tag_list.append(w[1:])
+        for t in tag_list:
+            tag, boolean = Tag.objects.get_or_create(name=t)
+            new_comment.tags.add(tag.id)
+
+        return redirect('main:detail', id)
+    return redirect('main:secondpage')
+    
 def edit(request, id):
     edit_post = Post.objects.get(pk=id)
     return render(request, 'main/edit.html', {'post': edit_post})
@@ -87,6 +92,21 @@ def update(request, id):
             update_post.image = request.FILES['image']
 
         update_post.save()
+
+        words = update_post.body.split(' ')
+        tag_list = []
+
+        for w in words:
+            if len(w)>0:
+                if w[0] == '#':
+                    tag_list.append(w[1:])
+
+        existing_tags = update_post.tags.values_list('name', flat=True)
+        for t in tag_list:
+            if t not in existing_tags:
+                tag, created = Tag.objects.get_or_create(name=t)
+                update_post.tags.add(tag)
+
         return redirect('main:detail', id=update_post.id)  # id 매개변수 추가
     return redirect('accounts:login', id=update_post.id)
 
@@ -100,6 +120,18 @@ def delete(request, id):
     delete_post.delete()
     return redirect('main:secondpage')
 
+def delete_comment(request, id):
+    comment = get_object_or_404(Comment, pk=id)
+    post_id = comment.post.id
+    if request.user.is_authenticated and request.user == comment.writer:
+        tags=comment.tags.all()
+        for tag in tags:
+            if tag.comments.count()==1:
+                tag.delete()
+        comment.delete()
+    return redirect('main:detail', id=post_id)
+
+
 def tag_list(request):
     tags=Tag.objects.all()
     return render(request, 'main/tag-list.html', { 'tags' : tags})
@@ -107,7 +139,9 @@ def tag_list(request):
 def tag_posts(request, tag_id):
     tag=get_object_or_404(Tag, id=tag_id)
     posts=tag.posts.all()
+    comments=tag.comments.all()
     return render(request, 'main/tag-post.html', {
         'tag' : tag,
         'posts' : posts,
+        'comments' : comments,
     })

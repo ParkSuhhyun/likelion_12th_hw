@@ -34,6 +34,11 @@
     <div class="comment_list">
         {% for comment in comments %}
         <hr>
+        <p>
+            {% for tag in comment.tags.all %}
+                    <a href="{% url 'main:tag-posts' tag.id %}">#{{ tag.name }}</a>
+            {% endfor %}
+        </p>
         <h4>작성자: {{comment.writer}}</h4>
         <p>내용: {{comment.content}}</p>
         <p>{{comment.pub_date}}</p>
