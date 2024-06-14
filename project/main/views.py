@@ -115,7 +115,7 @@ def delete(request, id):
 
     tags=delete_post.tags.all()
     for tag in tags:
-        if tag.posts.count()==1:
+        if tag.posts.count()+tag.comments.count()==1:
             tag.delete()
     delete_post.delete()
     return redirect('main:secondpage')
@@ -126,7 +126,7 @@ def delete_comment(request, id):
     if request.user.is_authenticated and request.user == comment.writer:
         tags=comment.tags.all()
         for tag in tags:
-            if tag.comments.count()==1:
+            if tag.comments.count()+tag.posts.count()==1:
                 tag.delete()
         comment.delete()
     return redirect('main:detail', id=post_id)
@@ -145,3 +145,15 @@ def tag_posts(request, tag_id):
         'posts' : posts,
         'comments' : comments,
     })
+
+def likes(request, post_id):
+    post=get_object_or_404(Post, id=post_id)
+    if request.user in post.like.all():
+        post.like.remove(request.user)
+        post.like_count -= 1
+        post.save()
+    else:
+        post.like.add(request.user)
+        post.like_count += 1
+        post.save()
+    return redirect('main:detail', post.id)
