@@ -15,7 +15,6 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-<<<<<<< HEAD:accounts/migrations/0001_initial.py
             name='Profile',
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
@@ -23,17 +22,6 @@ class Migration(migrations.Migration):
                 ('birth', models.TextField(max_length=8)),
                 ('grade', models.IntegerField(choices=[(1, '1'), (2, '2'), (3, '3'), (4, '4')], default=1)),
                 ('user', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
-=======
-            name='Post',
-            fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('title', models.CharField(max_length=50)),
-                ('sex', models.CharField(max_length=30)),
-                ('body', models.CharField(max_length=1000)),
-                ('pub_date', models.DateTimeField()),
-                ('image', models.ImageField(blank=True, null=True, upload_to='post/')),
-                ('writer', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
->>>>>>> 3f86284a02f54f474f6cae9e9dcb2c5d12b065e9:project/main/migrations/0001_initial.py
             ],
         ),
     ]
