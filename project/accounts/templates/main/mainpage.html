@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <h1 class="contents">2024 멋쟁이사자처럼 12기</h1>
+    <div class="contents">Django MTV 정리</div>
+    <div><h2>🦁MTV란?</h2> 모델 (Model), 템플릿 (Template), 뷰 (View)의 약자
+      <ul>
+        <img src="{% static 'images/Django MTV.png' %}" alt="Django MTV" width="500px">
+        <li><h1>모델:</h1> 데이터베이스와의 상호 작용을 관리. 모델은 데이터에 접근하고 조작하는 데 사용</li>
+        <li><h1>템플릿:</h1> 사용자에게 보여지는 HTML 페이지의 디자인</li>
+        <li><h1>뷰:</h1> 웹 애플리케이션의 비즈니스 로직을 처리하는 부분.  사용자에게 요청을 받아서 모델에서 데이터를 가져오고, 그것을 템플릿에 전달하여 사용자에게 응답 생성</li>
+      </ul>
+    </div>
+
+    {% endblock %}

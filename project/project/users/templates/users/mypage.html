@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block content %}
-<h1>{{ user }}에 오신 것을 환영합니다</h1>
+<h1>{{ user.profile.nickname }}에 오신 것을 환영합니다</h1>
 
 User : {{ user }} <br>
 UserProfile : {{ user.profile }} <br>
@@ -37,7 +37,7 @@ UserProfile : {{ user.profile }} <br>
     {% endif %}
 {% endif %}
 
-<h2>{{ user }} Posts:</h2>
+<h2>{{ user.profile.nickname }} Posts:</h2>
 <ul>
     {% for post in user_posts %}
         <li><a href="{% url 'main:detail' post.pk %}">{{ post.title }}</a></li>
